@@ -1,9 +1,8 @@
 package br.edu.ifrs.pw1.view;
 
+import br.edu.ifrs.pw1.dao.MinhaGen;
 import br.edu.ifrs.pw1.pessoas.ClientePF;
 
-import java.sql.SQLOutput;
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -53,9 +52,9 @@ public class Menu {
             System.out.println("Digite seu endereco: ");
             String endereco = teclado.nextLine();
             System.out.println("Digite seu CPF: ");
-            String telefone = teclado.nextLine();
-            System.out.println("Digite seu telefone: ");
             String cpf = teclado.nextLine();
+            System.out.println("Digite seu telefone: ");
+            String telefone = teclado.nextLine();
             ClientePF clientePF = new ClientePF(nome, endereco, cpf, telefone);
             clientePF.cadastrarClientePF(clientePF); //chamando o método DAO da classe ClientePF
             System.out.println("ClientePF cadastrado");
@@ -84,9 +83,9 @@ public class Menu {
     }
     public static void listarTodos(){
         System.out.println("--> LISTAR TODOS <--");
-        List<ClientePF> clientePFList = clientepf.listAll();
-        if(!clientePFList.isEmpty()){
-            for (ClientePF clientePF : clientePFList){
+        MinhaGen<ClientePF> clientePFList = clientepf.listAll();
+        if(clientePFList.listAll().size() >= 1){
+            for (ClientePF clientePF : clientePFList.listAll()){
                 System.out.println(clientePF.toString());
             }
         }else {

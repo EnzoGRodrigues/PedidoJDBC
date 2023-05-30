@@ -2,7 +2,6 @@ package br.edu.ifrs.pw1.dao;
 
 import br.edu.ifrs.pw1.pessoas.Cliente;
 
-import java.util.List;
 
 public class ClienteDAO implements GenericDAO<Cliente>{
     @Override
@@ -31,7 +30,7 @@ public class ClienteDAO implements GenericDAO<Cliente>{
     }
 
     @Override
-    public List<Cliente> listAll() {
+    public MinhaGen<Cliente> listAll() {
         return null;
     }
 }

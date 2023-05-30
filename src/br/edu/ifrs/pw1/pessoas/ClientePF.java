@@ -1,6 +1,7 @@
 package br.edu.ifrs.pw1.pessoas;
 
 import br.edu.ifrs.pw1.dao.ClientePFDAO;
+import br.edu.ifrs.pw1.dao.MinhaGen;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class ClientePF extends Cliente{
     public ClientePF pesquiasarPorCPF(String cpf){
         return (new ClientePFDAO().findByCPF(cpf));
     }
-    public List<ClientePF> listAll(){
+    public MinhaGen<ClientePF> listAll(){
         return (new ClientePFDAO().listAll());
     }
 }

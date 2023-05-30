@@ -4,8 +4,7 @@ import br.edu.ifrs.pw1.factory.ConnectionFactory;
 import br.edu.ifrs.pw1.pessoas.ClientePF;
 
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class ClientePFDAO implements GenericDAO<ClientePF>{
     @Override
@@ -16,8 +15,8 @@ public class ClientePFDAO implements GenericDAO<ClientePF>{
                     Statement.RETURN_GENERATED_KEYS)){
             statement.setString(1,obj.getNome().toLowerCase());
             statement.setString(2,obj.getEndereco().toLowerCase());
-            statement.setString(3,obj.getTelefone());
-            statement.setString(4,obj.getCpf());
+            statement.setString(3,obj.getCpf());
+            statement.setString(4,obj.getTelefone());
             statement.execute();
             ResultSet keys = statement.getGeneratedKeys();
             if(keys.next()) primaryKey = keys.getInt(1);
@@ -95,13 +94,13 @@ public class ClientePFDAO implements GenericDAO<ClientePF>{
     }
 
     @Override
-    public List<ClientePF> listAll() {
-        List<ClientePF> listaClientes = new LinkedList<>();
-        try (Connection connection = new ConnectionFactory().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQLs.LISTALL.getSql())) {
+    public MinhaGen<ClientePF>listAll(){
+        MinhaGen<ClientePF> listaClientes = new MinhaGen<>();
+        try(Connection connection = new ConnectionFactory().getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQLs.LISTALL.getSql())){
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                listaClientes.add(new ClientePF(
+            while (resultSet.next()){
+                listaClientes.adiciona(new ClientePF(
                         resultSet.getString("nome"),
                         resultSet.getString("endereco"),
                         resultSet.getString("cpf"),
@@ -109,15 +108,16 @@ public class ClientePFDAO implements GenericDAO<ClientePF>{
                 ));
             }
             return listaClientes;
-        } catch (SQLTimeoutException ex){
-            System.out.println("Timeout ao consultar lista de clientes");
-        } catch (SQLException ex) {
-            System.out.println("Erro ao listar todos os Clientes!\n" + ex.getMessage());
+        } catch (SQLTimeoutException e){
+            System.out.println("Timeout ao consultar");
+        }catch (SQLException e){
+            System.out.println("Erro ao listar os ClientesPF");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return null;
     }
+
 
     public int deleteNome(String nome) {
         try(Connection connection = new ConnectionFactory().getConnection();

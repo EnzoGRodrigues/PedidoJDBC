@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MinhaGen<T> {
-    List<T> listGeneric;
+    private final List<T> listGeneric;
 
     public MinhaGen() {
         listGeneric = new ArrayList<>();
